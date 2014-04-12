@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require "bundler"
+require "showfix/cli"
+
+Showfix::CLI.start
