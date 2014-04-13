@@ -32,20 +32,24 @@ module Showfix
     # Perform some cleanup on the filename
     def clean(string)
 
-      string = unix_friendly(string)
+      string = self.unix_friendly(string)
 
       if @options[:flags]
-        string = remove_flags(string)
+        string = self.remove_flags(string)
       end
 
       if @options[:year]
-        string = strip_year(string)
+        string = self.strip_year(string)
       end
 
       # Clean trailing/leading periods
-      string = string.gsub(/\A\.+|\.+\Z/, '')
+      string = self.trim(string)
 
       string
+    end
+
+    def trim(string)
+      string.strip.gsub(/\A\.+|\.+\Z/, '')
     end
 
     # Make unix friendly

@@ -16,12 +16,16 @@ module Showfix
         # 101; 1212
         /^(?<series>.*\D)(?<season>\d+)(?<episode>\d{2})(?<title>\W*.*)$/,
 
-        # TERRIBLE ONES
+        # TERRIBLE ONES ------------------------------------------------
 
         # ^101$
         /^(?<season>\d+)(?<episode>\d{2})$/
         
     ].freeze
+
+    def initialize(options={})
+      @options = {}.merge(options)
+    end
     
     # Parse a given string and look for matches
     def parse(string)

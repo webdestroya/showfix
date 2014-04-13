@@ -5,11 +5,13 @@
 [![Build Status](https://travis-ci.org/webdestroya/showfix.svg)][travis]
 [![Dependency Status](https://gemnasium.com/webdestroya/showfix.svg)][gemnasium]
 [![Code Climate](http://img.shields.io/codeclimate/github/webdestroya/showfix.svg)][codeclimate]
+[![Coverage Status](http://img.shields.io/coveralls/webdestroya/showfix.svg)][coveralls]
 
 [gem]: https://rubygems.org/gems/showfix
 [travis]: https://travis-ci.org/webdestroya/showfix
 [gemnasium]: https://gemnasium.com/webdestroya/showfix
 [codeclimate]: https://codeclimate.com/github/webdestroya/showfix
+[coveralls]: https://coveralls.io/r/webdestroya/showfix
 
 ## Description
 
@@ -18,11 +20,18 @@ This gem allows you to easily rename TV episode files. Useful for mass-renaming 
 
 ## Installation
 
-    $ gem install showfix
+```sh
+$ gem install showfix
+```
 
 ## Usage
 
 *TODO*
+
+## Roadmap
+
+* Support for multi-episode files (S01E20-E21)
+* Ability to manually enter season/episode numbers for show files that are not numbered at all
 
 ## Contributing
 

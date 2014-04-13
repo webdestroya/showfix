@@ -4,7 +4,7 @@ module Showfix
   class Episode
 
     # Video files, and some subtitles
-    EPISODE_EXTENSIONS = %w(avi mkv mp4 mpg mpeg mov m4v srt)
+    VALID_EXTENSIONS = %w(avi mkv mp4 mpg mpeg mov m4v srt)
 
     attr_accessor :season, :series, :episode, :title
     attr_reader :filename, :options, :extension, :file_no_ext
@@ -14,18 +14,32 @@ module Showfix
       raise ArgumentError, 'no filename' unless filename
 
       @filename = filename
-      @options = options
+      @options = {
+        season: nil
+        }.merge(options)
 
-      @cleaner = Cleaner.new
-      @parser = Parser.new
+      @cleaner = Cleaner.new(@options)
+      @parser = Parser.new(@options)
+
+      @season ||= options[:season] # if they passed in a default season
 
       @file_no_ext = @filename.chomp(File.extname(@filename))
       @extension = File.extname(@filename).gsub(/\./, '').downcase
+
+      self.update_episode_info
+    end
+
+    def skip?
+      !acceptable_file? || !has_episode_info?
+    end
+
+    def has_episode_info?
+      !@season.nil? && !@episode.nil? && !@season.empty? && !@episode.empty?
     end
 
     # Determines if this is a file we should work with
     def acceptable_file?
-      EPISODE_EXTENSIONS.include?(self.extension)
+      VALID_EXTENSIONS.include?(self.extension)
     end
 
 
@@ -62,7 +76,7 @@ module Showfix
       raise IOError, 'destination already exists' unless File.file?(self.to_formatted_s)
 
       begin
-
+        File.rename(@filename, self.to_formatted_s)
       rescue SystemCallError
         puts "Unable to rename file #{@filename}"
       end
