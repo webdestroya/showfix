@@ -22,23 +22,27 @@ module Showfix
       path = File.absolute_path(options['directory'])
 
       if options['directory'] != "."
-        say "Scanning directory: #{path}"
+        say "Scanning directory #{path}:"
         say ""
       end
 
-      episode_opts = {}
+      episode_opts = {
+        season: options['season'],
+        year: options['strip-year'],
+        flags: options['clean']
+      }
 
       Dir["#{path}/*"].each do |file|
         basename = File.basename(file)
         episode = Showfix::Episode.new(basename, episode_opts)
 
         if episode.acceptable_file?
-
-          unless episode.has_episode_info?
-            say "INPUT"
-          end
-
           say "#{basename} => "
+
+          # unless episode.has_episode_info?
+          #   input = ask "Enter the Season.Episode (1.1): "
+          #   episode.update_season_episode(input)
+          # end
 
           # If they fixed it
           if episode.has_episode_info?
