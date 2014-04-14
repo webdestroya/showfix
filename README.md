@@ -32,6 +32,7 @@ $ gem install showfix
 
 * Support for multi-episode files (S01E20-E21)
 * Ability to manually enter season/episode numbers for show files that are not numbered at all
+* Ability to specify the series name
 
 ## Contributing
 
