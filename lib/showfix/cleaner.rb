@@ -9,7 +9,7 @@ module Showfix
     SOURCE_FLAGS  = %w(
       DVDRip HDTVRip HDRip SATRip BDRip iTunesHD WEBRiP BLURAYRiP BluRay 
       iTunesHDRip RiP WEB DL PublicHD CAMRip WP TC Telecine CAM TS PDVD
-      Telesync PPV PPVRip SCR SCREENER DVDSCR DDC R5 HDDVD
+      Telesync PPV PPVRip SCR SCREENER DVDSCR DDC R5 HDDVD DVDRips
     ).freeze
     
     AUTHOR_FLAGS  = %w(
@@ -33,6 +33,9 @@ module Showfix
     def clean(string)
 
       string = self.unix_friendly(string)
+
+      # Clean trailing/leading periods
+      string = self.trim(string)
 
       if @options[:flags]
         string = self.remove_flags(string)
@@ -68,9 +71,7 @@ module Showfix
       string.gsub(/(\W(#{flags})){2,}/i, '')
         .gsub(/((#{flags})\W){2,}/i, '')
         .gsub(/^((#{flags})\W?){2,}$/i, '')
-
-      string = string.gsub(/(\W(#{flags})){1,}$/i, '')
-      string
+        .gsub(/\W(#{flags}){1,}$/i, '')
     end
 
     def strip_year(string)

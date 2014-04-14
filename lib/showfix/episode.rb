@@ -34,7 +34,7 @@ module Showfix
     end
 
     def has_episode_info?
-      !@season.nil? && !@episode.nil? && !@season.empty? && !@episode.empty?
+      !@season.nil? && !@episode.nil? && @season.is_a?(Fixnum) && @episode.is_a?(Fixnum)
     end
 
     # Determines if this is a file we should work with
@@ -65,22 +65,10 @@ module Showfix
       if info
         keys = info.names
         @series ||= @cleaner.clean(info[:series]) if keys.include?('series')
-        @season ||= info[:season] if keys.include?('season')
-        @episode ||= info[:episode] if keys.include?('episode')
+        @season ||= info[:season].to_i if keys.include?('season')
+        @episode ||= info[:episode].to_i if keys.include?('episode')
         @title ||= @cleaner.clean(info[:title]) if keys.include?('title')
       end
     end
-
-    def rename
-      raise IOError, 'source file not found' unless File.file?(@filename)
-      raise IOError, 'destination already exists' unless File.file?(self.to_formatted_s)
-
-      begin
-        File.rename(@filename, self.to_formatted_s)
-      rescue SystemCallError
-        puts "Unable to rename file #{@filename}"
-      end
-    end
-
   end
 end
