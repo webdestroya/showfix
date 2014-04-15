@@ -26,13 +26,19 @@ $ gem install showfix
 
 ## Usage
 
-*TODO*
+The most common usage is to fix all files within the current directory. You can optionally add `--pretend` to the command if you would like to see what it will rename, without actually touching your files.
+
+```sh
+$ cd SomeTvShow
+$ showfix rename
+```
+
+For detailed help, just run `showfix help` for a list of commands.
 
 ## Roadmap
 
 * Support for multi-episode files (S01E20-E21)
 * Ability to manually enter season/episode numbers for show files that are not numbered at all
-* Ability to specify the series name
 
 ## Contributing
 
