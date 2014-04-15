@@ -15,13 +15,15 @@ module Showfix
 
       @filename = filename
       @options = {
-        season: nil
+        season: nil,
+        series: nil
         }.merge(options)
 
       @cleaner = Cleaner.new(@options)
       @parser = Parser.new(@options)
 
       @season ||= options[:season] # if they passed in a default season
+      @series ||= options[:series]
 
       @file_no_ext = @filename.chomp(File.extname(@filename))
       @extension = File.extname(@filename).gsub(/\./, '').downcase
@@ -42,6 +44,12 @@ module Showfix
       VALID_EXTENSIONS.include?(self.extension)
     end
 
+    # Parse season/episode info inputted by the user from the commandline
+    def update_season_episode(input)
+      # 1.1 => S1, E1
+      # 1.1-2 => S1, E1 & E2
+      # 1 => E1 (expect season to be from command line)
+    end
 
     def to_formatted_s
 

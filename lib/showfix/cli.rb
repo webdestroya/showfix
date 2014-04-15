@@ -9,12 +9,19 @@ module Showfix
     method_option "directory", type: :string, banner: 'PATH', aliases: "-d",
       default: ".", 
       desc: "Specify the directory to work in. If not specified, use the current directory."
+    
     method_option "season", type: :numeric, aliases: "-s",
       banner: '1', desc: "The season/series number"
+    
+    method_option "series", type: :string, aliases: "-n",
+      banner: "\"Series Name\"", desc: "Specify the name of the TV series"
+    
     method_option "pretend", type: :boolean, lazy_default: true, default: false,
       aliases: "-p", desc: "Do not rename files, only show outcome"
+    
     method_option 'strip-year', type: :boolean, lazy_default: true,  default: false,
       desc: 'Strip years from file names', aliases: '-y'
+    
     method_option 'clean', type: :boolean, lazy_default: true, default: true,
       desc: "Strip encoding and resolution flags from filenames", aliases: '-c'
     def rename
@@ -27,6 +34,7 @@ module Showfix
       end
 
       episode_opts = {
+        series: options['series'],
         season: options['season'],
         year: options['strip-year'],
         flags: options['clean']
